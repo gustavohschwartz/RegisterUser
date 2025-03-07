@@ -8,13 +8,18 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.registeruser.ui.theme.RegisterUserTheme
 @Composable
 fun RegisterUserMainScreen() {
+    val registerUserViewModel : RegisterUserViewModel = viewModel()
+
     Scaffold {
         Column (
             modifier = Modifier
@@ -22,14 +27,19 @@ fun RegisterUserMainScreen() {
                 .padding(16.dp)
                 .fillMaxSize(),
         ){
-            RegisterUserFields()
+            RegisterUserFields(registerUserViewModel)
         }
     }
 }
 @Composable
-fun RegisterUserFields() {
-    OutlinedTextField(value = "",
-        onValueChange = {},
+fun RegisterUserFields(registerUserViewModel: RegisterUserViewModel) {
+    var registerUser = registerUserViewModel.uiState.collectAsState()
+
+
+    OutlinedTextField(value = registerUser.value.user,
+        onValueChange = {
+                        registerUserViewModel.onUserChange(it)
+        },
         singleLine = true,
         label = {
             Text(text = "User")
@@ -37,8 +47,10 @@ fun RegisterUserFields() {
         modifier = Modifier.fillMaxWidth()
     )
 
-    OutlinedTextField(value = "",
-        onValueChange = {},
+    OutlinedTextField(value = registerUser.value.email,
+        onValueChange = {
+                        registerUserViewModel.onUserChange(it)
+        },
         singleLine = true,
         label = {
             Text(text = "Email")
@@ -46,8 +58,10 @@ fun RegisterUserFields() {
         modifier = Modifier.fillMaxWidth()
     )
 
-    OutlinedTextField(value = "",
-        onValueChange = {},
+    OutlinedTextField(value = registerUser.value.password,
+        onValueChange = {
+                        registerUserViewModel.onUserChange(it)
+        },
         singleLine = true,
         label = {
             Text(text = "Password")
@@ -56,8 +70,10 @@ fun RegisterUserFields() {
         modifier = Modifier.fillMaxWidth()
     )
 
-    OutlinedTextField(value = "",
-        onValueChange = {},
+    OutlinedTextField(value = registerUser.value.confirmPassword,
+        onValueChange = {
+                        registerUserViewModel.onUserChange(it)
+        },
         singleLine = true,
         label = {
             Text(text = "Password confirm")
