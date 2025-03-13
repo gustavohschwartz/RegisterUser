@@ -64,8 +64,6 @@ fun RegisterUserFields(registerUserViewModel: RegisterUserViewModel){
         onValueChange = { registerUserViewModel.onConfirmPasswordChange(it) },
         isPassword = true
     )
-
-
     Button(
         modifier = Modifier.padding(top = 16.dp),
         onClick = {
