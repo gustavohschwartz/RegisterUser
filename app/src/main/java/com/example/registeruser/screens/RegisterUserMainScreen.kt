@@ -1,4 +1,5 @@
 package com.example.registeruser.screens
+
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,10 +11,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -34,30 +35,35 @@ fun RegisterUserMainScreen() {
         }
     }
 }
+
 @Composable
-fun RegisterUserFields(registerUserViewModel: RegisterUserViewModel) {
+fun RegisterUserFields(registerUserViewModel: RegisterUserViewModel){
     var registerUser = registerUserViewModel.uiState.collectAsState()
     val ctx = LocalContext.current
 
     MyTextField(label = "User",
         value = registerUser.value.user,
-        onValueChange = {registerUserViewModel.onUserChange(it)
-        })
+        onValueChange = {registerUserViewModel.onUserChange(it)}
+    )
 
     MyTextField(label = "Email",
         value = registerUser.value.email,
-        onValueChange = {registerUserViewModel.onEmailChange(it)
-        })
+        onValueChange = {registerUserViewModel.onEmailChange(it)}
+    )
 
     MyTextField(label = "Password",
         value = registerUser.value.password,
-        onValueChange = {registerUserViewModel.onPasswordChange(it)
-        })
+        onValueChange = {registerUserViewModel.onPasswordChange(it)},
+        visualTransformation = PasswordVisualTransformation(),
+        isPassword = true
+    )
 
-    MyTextField(label = "Confirm Password",
+    MyTextField(label = "Password Confirm",
         value = registerUser.value.confirmPassword,
-        onValueChange = {registerUserViewModel.onConfirmPasswordChange(it)
-        })
+        onValueChange = {registerUserViewModel.onConfirmPasswordChange(it)},
+        visualTransformation = PasswordVisualTransformation(),
+        isPassword = true
+    )
 
     Button(
         modifier = Modifier.padding(top = 16.dp),
