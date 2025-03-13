@@ -18,18 +18,19 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.Modifier
 
 @Composable
-fun PasswordField(password: String, onPasswordChange: (String) -> Unit) {
-
+fun PasswordField(
+    password: String,
+    onPasswordChange: (String) -> Unit,
+    labelText: String // Adicionando um parâmetro para definir a label dinamicamente
+) {
     var passwordVisible by remember { mutableStateOf(false) }
-
 
     OutlinedTextField(
         value = password,
         onValueChange = onPasswordChange,
-        label = { Text("Password") },
+        label = { Text(labelText) }, // Agora cada campo pode ter um rótulo diferente
         visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
         trailingIcon = {
-
             val image = if (passwordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
             IconButton(onClick = { passwordVisible = !passwordVisible }) {
                 Icon(imageVector = image, contentDescription = "Toggle password visibility")

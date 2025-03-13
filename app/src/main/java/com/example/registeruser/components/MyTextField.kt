@@ -14,31 +14,22 @@ import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.text.input.VisualTransformation
 
 @Composable
-
-
 fun MyTextField(
     label: String,
     value: String,
     onValueChange: (String) -> Unit,
     visualTransformation: VisualTransformation = VisualTransformation.None,
-    isPassword: Boolean = false // Adicionando parâmetro para controlar se é um campo de senha
-){
-
-
-    var isTouched = remember {
-        mutableStateOf(false)
-    }
-
-
-    var focusRequester = remember {
-        FocusRequester()
-    }
-
+    isPassword: Boolean = false
+) {
+    var isTouched = remember { mutableStateOf(false) }
+    var focusRequester = remember { FocusRequester() }
 
     if (isPassword) {
-
-        PasswordField(password = value, onPasswordChange = onValueChange)
-
+        PasswordField(
+            password = value,
+            onPasswordChange = onValueChange,
+            labelText = label // Adicionando a label ao PasswordField
+        )
     } else {
         OutlinedTextField(
             value = value,
@@ -48,21 +39,17 @@ fun MyTextField(
             },
             visualTransformation = visualTransformation,
             singleLine = true,
-            label = {
-                Text(text = label)
-            },
+            label = { Text(text = label) },
             modifier = Modifier
                 .fillMaxWidth()
                 .focusRequester(focusRequester)
                 .onFocusEvent {
-                    if (it.hasFocus)
-                        isTouched.value = true
+                    if (it.hasFocus) isTouched.value = true
                 },
-
             isError = isTouched.value && value.isBlank(),
             supportingText = {
-                if (isTouched.value && value.isBlank()){
-                    Text(text = "Field ${label} is required" )
+                if (isTouched.value && value.isBlank()) {
+                    Text(text = "Field $label is required")
                 }
             }
         )

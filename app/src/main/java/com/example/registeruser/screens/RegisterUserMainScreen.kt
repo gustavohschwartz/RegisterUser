@@ -51,19 +51,20 @@ fun RegisterUserFields(registerUserViewModel: RegisterUserViewModel){
         onValueChange = {registerUserViewModel.onEmailChange(it)}
     )
 
-    MyTextField(label = "Password",
+    MyTextField(
+        label = "Password",
         value = registerUser.value.password,
-        onValueChange = {registerUserViewModel.onPasswordChange(it)},
-        visualTransformation = PasswordVisualTransformation(),
+        onValueChange = { registerUserViewModel.onPasswordChange(it) },
         isPassword = true
     )
 
-    MyTextField(label = "Password Confirm",
+    MyTextField(
+        label = "Confirm Password",
         value = registerUser.value.confirmPassword,
-        onValueChange = {registerUserViewModel.onConfirmPasswordChange(it)},
-        visualTransformation = PasswordVisualTransformation(),
+        onValueChange = { registerUserViewModel.onConfirmPasswordChange(it) },
         isPassword = true
     )
+
 
     Button(
         modifier = Modifier.padding(top = 16.dp),
